@@ -1,0 +1,45 @@
+# https://taskfile.dev
+
+version: "3"
+# output: prefixed
+
+vars:
+  GREETING: |-
+    Usage: task {install-all, install-base-tools, install-mid-tools, install-prj-tools}
+    commands:
+      install-all   -   Install All Deps [Only if needed]
+      ... rest      -   Install Specific subset
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+      - task -a
+    silent: true
+
+  install-base-tools: |-
+    echo "install base tools"
+    bash setup.os.tools.sh install-all
+  
+  install-mid-tools: |-
+    if [ "$(uname)" == "Darwin" ]; then
+      # Do something under Mac OS X platform
+    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+      # Do something under GNU/Linux platform
+      echo "install base tools"
+      task -t setup.zsh.tools.yml install-all
+    fi
+
+  install-prj-tools: |-
+    echo "install project tools tools"
+    task -d .. setup-tools
+
+  install-all-tasks:
+    - task: install-base-tools
+    - task: install-mid-tools
+    - task: install-prj-tools
+
+  install-all:
+    desc: install all required tools for devopd
+    cmds:
+      - task install-all-tasks -o prefixed

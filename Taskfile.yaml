@@ -29,18 +29,10 @@ tasks:
     - |-
       cat << FQD > init.sh
       #!/usr/bin/env sh
-
-      get_one_it () {
-        echo  rm -f \$1
-        echo  wget {{.base_file_url}}/\$1
-        echo  "done \$1"
-      }
-      export -f get_one_it   
-            
-      mkdir -p devpod
-      pushd devpod
-      
-      xargs -P 4 -I{} bash -c 'get_one_it {}' << FHJ
+      set -e
+      BASE_FILE_URL={{.base_file_url}}
+      mkdir -p devpod && cd devpod      
+      xargs -P 4 -I{} wget \$BASE_FILE_URL/{} -O {} << FHJ
       {{.items}}
       FHJ
       FQD
