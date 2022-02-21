@@ -27,9 +27,8 @@ tasks:
     desc: _
     vars:
       base_file_url: https://raw.githubusercontent.com/yairdar/devpod/main/src/devpod
-      # items_expr: ls -1 release/devpod | sed "s@^@{{.base_file_url}}/@"
       items:
-        sh: ls -1 release/devpod
+        sh: ls -1 src/devpod
     cmds:
     - |-
       cat << FQD > init.sh
