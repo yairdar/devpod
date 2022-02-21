@@ -48,3 +48,8 @@ tasks:
     - cmd: |-
         curl -L https://raw.githubusercontent.com/yairdar/devpod/main/init.sh \
         | bash
+        
+  update-context:
+    desc: API snippen of init with devpod applied on self
+    cmds:
+    - cmd: bash devpod/update-context.sh
