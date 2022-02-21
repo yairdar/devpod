@@ -1,0 +1,62 @@
+#!/usr/local/bin/task --taskfile
+
+# https://taskfile.dev
+
+version: "3"
+
+tasks:
+
+  install-all:
+    desc: "install preconfigured zsh and oh-my-zsh from github"
+    cmds:
+     - task: install-zsh-base
+     - task: config-zsh
+     - task: install-task-completion
+
+  install-zsh-base:
+    desc: "install zsh and oh-my-zsh from github"
+    cmds:
+      - sudo apt update && sudo apt install -y zsh curl wget
+      - git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+      - cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+#       - sudo chsh -s /bin/zsh
+
+  config-zsh:
+    desc: "set bureau theme for zsh"
+    cmds:
+      - sed -i 's/.*ZSH_THEME=.*/ZSH_THEME="bureau"/' ~/.zshrc
+      - sed -i 's/.*DISABLE_UPDATE_PROMPT=.*/DISABLE_UPDATE_PROMPT=true/' ~/.zshrc
+      - sed -i 's/.*DISABLE_AUTO_UPDATE=.*/DISABLE_AUTO_UPDATE=true/' ~/.zshrc
+
+  install-task-completion:
+    desc: "install taskgo completions for taskfiles"
+    cmds:
+      - git clone https://github.com/sawadashota/go-task-completions.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task || true
+      - |-
+        python3 - <<EOF
+        from pathlib import Path
+        pp = Path.home() / '.zshrc'
+        text = pp.read_text()
+        parts = text.split("\nplugins=(")
+        assert len(parts) == 2
+        end_plugins = parts[1].index(")")
+        prev_cont = parts[1][:end_plugins]
+        next_cont = parts[1][end_plugins+1:]
+        
+        auto_load_line='autoload -U compinit && compinit'
+        auto_load_var= "" if auto_load_line in text else f"\n{auto_load_line}"
+        task_item= "" if "task" in prev_cont else " task "
+        new_text_l = [
+          parts[0], 
+          "\nplugins=(", 
+          prev_cont, 
+          f"{task_item})", 
+          auto_load_var,
+          next_cont
+        ]
+        pp.write_text("".join(new_text_l))
+        EOF
+      - |-
+        echo "Zsh completions for task go installed
+        For immidiate effect run 'source ~/.zshrc'        
+        "
