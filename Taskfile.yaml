@@ -12,12 +12,17 @@ tasks:
       - task -a
     silent: true
     
-  build:
+  release:
     desc: build release-art
     cmds:
     - mkdir -p release/
     - cp -r devpod release/devpod
-    
+
+  build:
+    desc: build release-art
+    cmds:
+    - task post-build-stamp
+        
   post-build-stamp:
     desc: _
     vars:
@@ -30,8 +35,8 @@ tasks:
       cat << FQD > init.sh
       #!/usr/bin/env sh
       set -e
-      BASE_FILE_URL={{.base_file_url}}
       mkdir -p devpod && cd devpod      
+      BASE_FILE_URL={{.base_file_url}}
       xargs -P 4 -I{} wget \$BASE_FILE_URL/{} -O {} << FHJ
       {{.items}}
       FHJ
