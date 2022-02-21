@@ -3,7 +3,7 @@
 _ME_PARENT=$(dirname $(readlink -f $0))
 
 # install/update devpod dir
-export DEVPOD_INIT_DIR=.
+export DEVPOD_INIT_DIR="$_ME_PARENT"
 curl -L \
     "https://raw.githubusercontent.com/yairdar/devpod/main/init.sh" \
 | bash
