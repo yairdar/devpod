@@ -41,3 +41,10 @@ tasks:
       {{.items}}
       FHJ
       FQD
+  
+  init-from-gitub-latest:
+    desc: API snippen of init with devpod applied on self
+    cmds:
+    - cmd: |-
+        curl -L https://raw.githubusercontent.com/yairdar/devpod/main/init.sh \
+        | bash
