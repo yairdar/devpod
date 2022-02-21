@@ -1,6 +1,8 @@
 # devpod
 Developer Tools Setups for Clis, Envs and Services
 
+Provides Taskfile.dev based automation process
+
 
 ## Quick Install
 
