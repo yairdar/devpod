@@ -22,6 +22,8 @@ tasks:
     desc: build release-art
     cmds:
     - task post-build-stamp
+    - chmod +x src/devpod/*.sh
+    - chmod +x src/devpod/*.yml
         
   post-build-stamp:
     desc: _
