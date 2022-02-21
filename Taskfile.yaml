@@ -33,15 +33,18 @@ tasks:
         sh: ls -1 src/devpod
     cmds:
     - |-
-      cat << FQD > init.sh
+      cat << MRK_CAT > init.sh
       #!/usr/bin/env sh
       set -e
-      mkdir -p devpod && cd devpod      
+      DEVPOD_INIT_DIR=\${DEVPOD_INIT_DIR:-devpod}
+      mkdir -p \$DEVPOD_INIT_DIR && cd \$DEVPOD_INIT_DIR      
+      
       BASE_FILE_URL={{.base_file_url}}
-      xargs -P 4 -I{} wget \$BASE_FILE_URL/{} -O {} << FHJ
+      xargs -P 4 -I{} wget \$BASE_FILE_URL/{} -O {} << MRK_XRGS
       {{.items}}
-      FHJ
-      FQD
+      MRK_XRGS
+
+      MRK_CAT
   
   init-from-gitub-latest:
     desc: API snippen of init with devpod applied on self
