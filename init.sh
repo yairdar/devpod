@@ -2,7 +2,7 @@
 
 get_one_it () {
   echo  rm -f $1
-  echo  wget https://raw.githubusercontent.com/yairdar/devpod/main/devpod/$1
+  echo  wget https://raw.githubusercontent.com/yairdar/devpod/main/src/devpod/$1
   echo  "done $1"
 }
 export -f get_one_it   
