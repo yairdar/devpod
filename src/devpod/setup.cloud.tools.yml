@@ -1,0 +1,30 @@
+version: "3"
+tasks:
+
+  install-aws-cli:
+    desc: _
+    dir: __tmp__
+    cmds:
+      - |-
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
+
+  install-gh-cli:
+    desc: _
+    dir: __tmp__
+    cmds:    
+      - |-
+        curl -L https://github.com/cli/cli/releases/download/v2.5.1/gh_2.5.1_linux_amd64.tar.gz -o gh_2.5.1_linux_amd64.tar.gz
+        tar xvf gh_2.5.1_linux_amd64.tar.gz
+        sudo mv gh_2.5.1_linux_amd64/bin/gh /usr/local/bin/
+
+  # install-aws-vault:
+  #   desc: _
+  #   dir:
+  #   cmds:
+  #     - |-
+        
+        
+  
+  
