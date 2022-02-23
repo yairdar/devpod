@@ -1,0 +1,33 @@
+#!/usr/local/bin/task --taskfile
+
+# https://taskfile.dev
+
+version: "3"
+
+tasks:
+
+  install-all:
+    desc: _
+    cmds:
+      - task: install-docker
+
+  install-docker:
+    desc: "install docker"
+    from_url: https://phoenixnap.com/kb/how-to-install-docker-on-ubuntu-18-04
+    status:
+      - test -v IN_DOCKER
+
+    cmds:
+    - |
+      sudo apt-get update \
+      && sudo apt-get install -y \
+         apt-transport-https \
+         ca-certificates \
+         curl \
+         software-properties-common
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
+    - |
+      sudo apt-get update \
+      && sudo apt-get install -y docker-ce \
+      && sudo apt-cache madison docker-ce
