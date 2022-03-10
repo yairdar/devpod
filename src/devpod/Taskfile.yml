@@ -30,9 +30,18 @@ tasks:
       task -t setup.zsh.tools.yml install-all
     fi
 
-  install-prj-tools: |-
-    echo "install project tools tools"
-    task -d .. setup-tools
+  install-prj-tools:
+    desc: "install project tools tools"
+    cmds:
+    - |-
+      SETUP_TOOLS_CMD_TEXTBLOCK="$(yq e '.tasks[_setup_prj_tools_]' ../Taskfile.yml | tee)"
+      if [[ "$SETUP_TOOLS_CMD_TEXTBLOCK" != "" ]]; then
+        echo "going to execute $SETUP_TOOLS_CMD_TEXTBLOCK"
+        echo "-------------------------------------------"
+        task -d .. _setup_prj_tools_
+      else
+        echo "No Project Tools Setup Provided"
+      fi
 
   install-all-tasks:
     - task: install-base-tools
