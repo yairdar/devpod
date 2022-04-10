@@ -16,10 +16,13 @@ tasks:
   install-zsh-base:
     desc: "install zsh and oh-my-zsh from github"
     cmds:
-      - sudo apt update && sudo apt install -y zsh curl wget
-      - git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-      - cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-#       - sudo chsh -s /bin/zsh
+    - sudo apt update && sudo apt install -y zsh curl wget
+    - git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+    - cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+    #  - sudo chsh -s /bin/zsh
+    status:
+    - test -e ~/.oh-my-zsh
+
 
   config-zsh:
     desc: "set bureau theme for zsh"
@@ -30,6 +33,9 @@ tasks:
 
   install-task-completion:
     desc: "install taskgo completions for taskfiles"
+    status:
+    - test -e ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task
+    
     cmds:
       - git clone https://github.com/sawadashota/go-task-completions.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task || true
       - |-
