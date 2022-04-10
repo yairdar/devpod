@@ -1,0 +1,108 @@
+#!/usr/local/bin/task --taskfile
+
+# https://taskfile.dev
+
+version: '3'
+vars:
+  ___the_taskfile_path__: setup.os.conda.yaml
+  __required_cli_tools__: >-
+    wget
+  url_download_base: https://repo.anaconda.com/miniconda
+  # windows is not cupported
+  tkn_conda_os: '{{ if eq OS "darwin" }}MacOSX{{else}}Linux{{end}}'
+  tkn_conda_arch: '{{ if eq ARCH "amd64" }}x86_64{{else}}{{ARCH}}{{end}}'
+  conda_download_url: '{{.url_download_base}}/Miniconda3-latest-{{.tkn_conda_os}}-{{.tkn_conda_arch}}.sh'
+
+  local_source: ~/miniconda.sh
+  target_dest: ~/miniconda3
+
+tasks:
+  default:
+    cmds:
+      - task: info
+      - echo "use {{.___the_taskfile_path__}} install-all"
+    silent: true
+  
+  info:
+    desc: info about block  {{.___the_taskfile_path__}}
+    silent: true
+    cmds:
+    - |-
+      echo "
+      OS={{OS}} ARCH={{ARCH}}
+      CONDA .OS={{.tkn_conda_os}} .ARCH={{.tkn_conda_arch}}
+      conda_download_url={{.conda_download_url}}
+      "
+
+
+  install-all:
+    desc: install all
+    cmds:
+      - task: install-miniconda-local
+
+  install-miniconda-local:
+    desc: Install conda
+    cmds: 
+      - task: install-miniconda-local.prepare-local-storage
+      - task: install-miniconda-local.sync-remote-to-local
+      - task: install-miniconda-local.install-silent
+      - task: install-miniconda-local.init-bash
+      - task: install-miniconda-local.init-zsh
+      # - task: install-miniconda-local.test-install
+
+  ref_one_cmd: &ref_one_cmd
+    _desc: "helper task to define steps"
+    desc: "task {{.TASK}} runs {{.cmd}}"
+    cmds:
+      - task: ze-run-cmd
+        vars: 
+          name: '{{.TASK}}'
+          cmd: '{{.cmd}}'
+
+  install-miniconda-local.prepare-local-storage:
+    vars:
+      cmd: rm -rf {{.target_dest}}
+    <<: *ref_one_cmd
+
+  install-miniconda-local.sync-remote-to-local:
+    vars:
+      cmd: wget --timestamping {{.conda_download_url}}  -O {{.local_source}}
+    <<: *ref_one_cmd
+
+  install-miniconda-local.install-silent:
+    vars:
+      cmd: bash {{.local_source}} -b -p {{.target_dest}}
+    <<: *ref_one_cmd
+
+  install-miniconda-local.init-bash:
+    vars:
+      cmd: '{{.target_dest}}/condabin/conda init bash'
+    <<: *ref_one_cmd
+
+  install-miniconda-local.init-zsh:
+    vars:
+      cmd: '{{.target_dest}}/condabin/conda init zsh'
+    <<: *ref_one_cmd
+
+  install-miniconda-local.test-install:
+    vars:
+      cmd: 'echo bash'
+      # cmd: 'echo bash --login -c "conda --version"'
+    <<: *ref_one_cmd
+  
+  ze-run-cmd:
+    args:
+      cmd: command to run
+      name: command name
+    vars:
+      __cmd_init__: |-
+        echo "@@act=init akind=cmd cmd.name='{{.name}}' cmd.line='{{.cmd}} '"
+      __cmd_over__: |-
+        echo "@@act=over akind=cmd cmd.name='{{.name}}' cmd.line='{{.cmd}} '"
+    cmds:
+      - |-
+        {{.__cmd_init__}}
+        {{.cmd}}
+        {{.__cmd_over__}}
+    prefix: "[run-cmd:{{.name}}]"
+  
