@@ -57,3 +57,8 @@ tasks:
     desc: API snippen of init with devpod applied on self
     cmds:
     - cmd: bash devpod/update-context.sh
+
+  open-repo-web:
+    desc: open on web repo view
+    cmds:
+    - open https://github.com/yairdar/devpod
