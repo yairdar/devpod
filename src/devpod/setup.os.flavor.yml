@@ -1,0 +1,7 @@
+#!/usr/local/bin/task --taskfile
+
+# https://taskfile.dev
+
+version: "3"
+tasks:
+  default: echo not implemented
