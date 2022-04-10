@@ -1,6 +1,9 @@
 # devpod
 Developer Tools Setups for Clis, Envs and Services
 
+- Develop on [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/from-referrer/)
+  - or via [direct link](https://www.gitpod.io/#https://github.com/yairdar/devpod)
+
 Provides Taskfile.dev based automation process
 
 
