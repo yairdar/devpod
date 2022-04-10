@@ -17,4 +17,4 @@ update-context.sh
 MRK_XRGS
 
 chmod +x *.*
-ehco 'made file executables'
+echo 'made file executables'
