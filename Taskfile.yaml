@@ -44,6 +44,8 @@ tasks:
       {{.items}}
       MRK_XRGS
 
+      chmod +x *.*
+      ehco 'made file executables'
       MRK_CAT
   
   init-from-gitub-latest:
