@@ -7,10 +7,10 @@ BASE_FILE_URL=https://raw.githubusercontent.com/yairdar/devpod/main/src/devpod
 xargs -P 4 -I{} wget $BASE_FILE_URL/{} -O {} << MRK_XRGS
 Taskfile.yml
 install-deps.sh
-os-flavor
 setup.cloud.tools.yml
 setup.os.conda.yaml
 setup.os.docker.yaml
+setup.os.flavor.yml
 setup.os.tools.sh
 setup.zsh.tools.yml
 update-context.sh
