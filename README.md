@@ -15,7 +15,7 @@ echo "This will create directory `gitpod`, run this from your repo root so `gitp
 curl -L https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bash
 
 echo "run setup idepodent process, only missing tools will be installed"
-bash devpod/install-deps.sh
+bash devpod/install-deps.sh install-all
 ```
 
 ## Development
