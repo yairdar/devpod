@@ -4,7 +4,7 @@ set -e
 
 # requre 'install-all' arg
 if [[ "$1" != "install-all" ]]; then
-    echo "Usage setup.sh install-all"
+    echo "Usage install-deps.sh install-all"
     exit 1
 fi
 

@@ -6,7 +6,7 @@ set -e
 
 # _def_minimal_os_took_pack_list__for_dev=""
 MISSING=
-for _it in curl wget git vim
+for _it in curl wget git vim zip unzip
 do
     if [ -f $(which $_it || echo _none_) ]; then
         echo "$_it is upto date"
