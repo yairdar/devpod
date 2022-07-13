@@ -1,0 +1,20 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Test suite for devpod
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+      - task -a
+    silent: true
+
+  test-udb-simple:
+    desc: Test of src in Ubuntu docker container using Dockerfile build, simple case
+    dir: ../..
+    cmds:
+    - docker build -f tests/test-before-push/Dockerfile src
+    

@@ -1,0 +1,9 @@
+FROM ubuntu:20.04
+# what's the variable on the next line and what is it for?
+ENV IN_DOCKER 1
+
+# copy The Sequence scripts to the container
+COPY devpod /devpod
+
+# run The Sequence to test it
+RUN bash devpod/install-deps.sh install-all
