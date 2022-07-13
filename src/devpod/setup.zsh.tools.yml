@@ -4,6 +4,10 @@
 
 version: "3"
 
+vars:
+  MAYBE_`: 
+    sh: which sudo &> /dev/null && echo "sudo" || echo ""
+
 tasks:
 
   install-all:
@@ -16,10 +20,11 @@ tasks:
   install-zsh-base:
     desc: "install zsh and oh-my-zsh from github"
     cmds:
-    - sudo apt update && sudo apt install -y zsh curl wget
+    - |-
+      {{.MAYBE_SUDO}} apt update && {{.MAYBE_SUDO}} apt install -y zsh curl wget
     - git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
     - cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-    #  - sudo chsh -s /bin/zsh
+    #  - {{.MAYBE_SUDO}} chsh -s /bin/zsh
     status:
     - test -e ~/.oh-my-zsh
 
