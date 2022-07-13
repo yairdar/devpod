@@ -31,16 +31,25 @@ tasks:
     fi
 
   install-prj-tools:
-    desc: "install project tools tools"
+    desc: "check if there is a Project Tools setup"
+    cmds:
+      - echo "Check if there is Project Tools setup file. If there is one, Project Tools will be installed"
+      - task: install-prj-tools-now
+    
+
+  install-prj-tools-now:
+    desc: "install project tools"
+    status:
+      - test ! -f ../Taskfile.yml
     cmds:
     - |-
-      SETUP_TOOLS_CMD_TEXTBLOCK="$(yq e '.tasks[_setup_prj_tools_]' ../Taskfile.yml | tee)"
+      SETUP_TOOLS_CMD_TEXTBLOCK="$(yq e '.tasks[_setup_prj_tools_]' ''../Taskfile.yml' | tee)"
       if [[ "$SETUP_TOOLS_CMD_TEXTBLOCK" != "" ]]; then
         echo "going to execute $SETUP_TOOLS_CMD_TEXTBLOCK"
         echo "-------------------------------------------"
         task -d .. _setup_prj_tools_
       else
-        echo "No Project Tools Setup Provided"
+        echo "No Project Tools setup provided"
       fi
 
   install-all-tasks:

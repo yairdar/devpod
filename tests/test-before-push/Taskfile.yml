@@ -16,5 +16,10 @@ tasks:
     desc: Test of src in Ubuntu docker container using Dockerfile build, simple case
     dir: ../..
     cmds:
-    - docker build -f tests/test-before-push/Dockerfile src
-    
+    - docker build -f tests/test-before-push/Dockerfile_no_python src
+  
+  test-udb-with-python:
+    desc: Test of src in Ubuntu docker container using Dockerfile build with python
+    dir: ../..
+    cmds:
+    - docker build -f tests/test-before-push/Dockerfile_with_python src
