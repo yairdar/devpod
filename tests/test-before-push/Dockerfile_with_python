@@ -1,0 +1,12 @@
+FROM ubuntu:20.04
+# what's the variable on the next line and what is it for?
+ENV IN_DOCKER 1
+
+# copy The Sequence scripts to the container
+COPY devpod /devpod
+
+# install python3 to test install-task-completion in setup.zsh.tools.yml
+RUN apt update && apt install -y python3
+
+# run The Sequence to test it
+RUN bash devpod/install-deps.sh install-all

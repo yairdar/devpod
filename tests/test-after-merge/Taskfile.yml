@@ -1,0 +1,25 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Test suite for Devpod after merge with main branch
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+      - task -a
+    silent: true
+
+  test-quick-install-simple:
+    desc: Test of Quick Install in src in Ubuntu docker container using Dockerfile build, simple case
+    dir: ../..
+    cmds:
+    - docker build -f tests/test-after-merge/Dockerfile_no_python src
+  
+  test-quick-install-with-python:
+    desc: Test of Quick Install in src in Ubuntu docker container using Dockerfile build with python
+    dir: ../..
+    cmds:
+    - docker build -f tests/test-after-merge/Dockerfile_with_python src
