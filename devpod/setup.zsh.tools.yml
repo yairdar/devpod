@@ -4,6 +4,10 @@
 
 version: "3"
 
+vars:
+  MAYBE_SUDO: 
+    sh: which sudo &> /dev/null && echo "sudo" || echo ""
+    
 tasks:
 
   install-all:
@@ -16,10 +20,11 @@ tasks:
   install-zsh-base:
     desc: "install zsh and oh-my-zsh from github"
     cmds:
-    - sudo apt update && sudo apt install -y zsh curl wget
+    - |-
+      {{.MAYBE_SUDO}} apt update && {{.MAYBE_SUDO}} apt install -y zsh curl wget
     - git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
     - cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-    #  - sudo chsh -s /bin/zsh
+    #  - {{.MAYBE_SUDO}} chsh -s /bin/zsh
     status:
     - test -e ~/.oh-my-zsh
 
@@ -30,12 +35,31 @@ tasks:
       - sed -i 's/.*ZSH_THEME=.*/ZSH_THEME="bureau"/' ~/.zshrc
       - sed -i 's/.*DISABLE_UPDATE_PROMPT=.*/DISABLE_UPDATE_PROMPT=true/' ~/.zshrc
       - sed -i 's/.*DISABLE_AUTO_UPDATE=.*/DISABLE_AUTO_UPDATE=true/' ~/.zshrc
-
+      
   install-task-completion:
+    desc: ""
+    cmds:
+    - |-
+      echo "Checking if python3 is installed before trying to install zsh task completion.
+      Without python3 zsh task completion will not be installed."
+    - task: install-task-completion-check-python
+    
+  install-task-completion-check-python:
+    desc: "check if python is installed, and if yes, install task completion"
+    vars:
+      PYTHON_INSTALLED:
+        sh: which python3 &> /dev/null && echo "yes" || echo "no"
+    status:
+      - test {{.PYTHON_INSTALLED}} = no
+    cmds:
+      - |-
+        echo "python3 is installed. Installing zsh task completion"
+      - task: install-task-completion-now
+  
+  install-task-completion-now:
     desc: "install taskgo completions for taskfiles"
     status:
-    - test -e ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task
-    
+      - test -e ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task
     cmds:
       - git clone https://github.com/sawadashota/go-task-completions.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task || true
       - |-

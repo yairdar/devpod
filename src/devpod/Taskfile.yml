@@ -21,23 +21,20 @@ tasks:
     echo "install base tools"
     bash setup.os.tools.sh install-all
   
-  install-mid-tools: |-
-    if [ "$(uname)" == "Darwin" ]; then
-      # Do something under Mac OS X platform
-    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-      # Do something under GNU/Linux platform
-      echo "install base tools"
-      task -t setup.zsh.tools.yml install-all
-    fi
+  install-mid-tools:
+    desc: Install Middle Level
+    silent: true
+    cmds: 
+     - |-
+      if [ "$(uname)" == "Darwin" ]; then
+        # Do something under Mac OS X platform
+      elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+        # Do something under GNU/Linux platform
+        echo "install base tools"
+        task -t setup.zsh.tools.yml install-all
+      fi
 
   install-prj-tools:
-    desc: "check if there is a Project Tools setup"
-    cmds:
-      - echo "Check if there is Project Tools setup file. If there is one, Project Tools will be installed"
-      - task: install-prj-tools-now
-    
-
-  install-prj-tools-now:
     desc: "install project tools"
     status:
       - test ! -f ../Taskfile.yml

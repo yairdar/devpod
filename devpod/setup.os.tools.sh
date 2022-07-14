@@ -4,6 +4,8 @@ set -e
 
 # ###--- os minimal dev pack ---
 
+MAYBE_SUDO=$(which sudo &> /dev/null && echo "sudo" || echo "")
+
 # _def_minimal_os_took_pack_list__for_dev=""
 MISSING=
 for _it in curl wget git vim zip unzip
@@ -17,7 +19,8 @@ do
 done
 
 if [ "$(echo $MISSING)" != "" ]; then
-    sudo apt install -y $MISSING
+    $MAYBE_SUDO apt update
+    $MAYBE_SUDO apt install -y $MISSING
 fi
 
 # ###--- install taskfile ---
@@ -26,7 +29,7 @@ if [ -f $(which task  || echo _none_ ) ]; then
 else
     echo "Install task exe from web installer of taskfile.dev"
     sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d \
-        && sudo mv ./bin/task /usr/local/bin/task \
+        && $MAYBE_SUDO mv ./bin/task /usr/local/bin/task \
         && rm -rf ./bin \
         && echo "taskfile installed into: /usr/local/bin/task"
 fi
@@ -40,7 +43,7 @@ else
     echo "Install yq from github release"
     wget https://github.com/mikefarah/yq/releases/download/v4.16.1/yq_linux_amd64 \
         && chmod +x yq_linux_amd64 \
-        && sudo mv yq_linux_amd64 /usr/local/bin/yq \
+        && $MAYBE_SUDO mv yq_linux_amd64 /usr/local/bin/yq \
         && echo "yq4 installed into: /usr/local/bin/yq"
 fi
 # ```
