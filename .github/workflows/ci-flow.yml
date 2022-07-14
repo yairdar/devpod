@@ -3,7 +3,7 @@ name: ci-flow
 
 on:
   push:
-    branches: [ main, yairda.conect.tests.to.root ]
+    branches: [ main]
   pull_request:
     branches: [ main , yairda.conect.tests.to.root ]
   workflow_dispatch:
