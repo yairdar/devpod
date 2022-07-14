@@ -3,7 +3,7 @@
 version: '3'
 
 vars:
-  GREETING: Test suite for devpod
+  GREETING: Test suite for Devpod
 
 tasks:
   default:

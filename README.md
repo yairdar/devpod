@@ -11,7 +11,7 @@ Quick Install runs [The Seqeunce](docs/the-sequence.md) that installs the main D
 
 ```shell
 echo "Inititalize $(pwd) with devpod"
-echo "This will create directory `gitpod`, run this from your repo root so `gitpod` became 1 level dir."
+echo "This will create directory `devpod`, run this from your repo root so `devpod` became 1 level dir."
 wget -q -O - https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bash
 
 echo "run setup idempotent process, only missing tools will be installed"

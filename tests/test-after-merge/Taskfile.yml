@@ -3,7 +3,7 @@
 version: '3'
 
 vars:
-  GREETING: Test suite for devpod
+  GREETING: Test suite for Devpod after merge with main branch
 
 tasks:
   default:
@@ -12,14 +12,14 @@ tasks:
       - task -a
     silent: true
 
-  test-udb-simple:
-    desc: Test of src in Ubuntu docker container using Dockerfile build, simple case
+  test-qi-simple:
+    desc: Test of Quick Install in src in Ubuntu docker container using Dockerfile build, simple case
     dir: ../..
     cmds:
-    - docker build -f tests/test-before-push/Dockerfile_no_python src
+    - docker build -f tests/test-after-merge/Dockerfile_no_python src
   
-  test-udb-with-python:
-    desc: Test of src in Ubuntu docker container using Dockerfile build with python
+  test-qi-with-python:
+    desc: Test of Quick Install in src in Ubuntu docker container using Dockerfile build with python
     dir: ../..
     cmds:
-    - docker build -f tests/test-before-push/Dockerfile_with_python src
+    - docker build -f tests/test-after-merge/Dockerfile_with_python src
