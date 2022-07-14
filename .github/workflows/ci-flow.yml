@@ -1,0 +1,26 @@
+
+name: ci-flow
+
+on:
+  push:
+    branches: [ main]
+  pull_request:
+    branches: [ main , yairda.conect.tests.to.root ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          
+      - name: use devpod dir to setup working devpod
+        run: bash devpod/install-deps.sh install-all
+
+      - name: 'build'
+        run: 'task build'
+        
+      - name: 'test'
+        run: 'task test'

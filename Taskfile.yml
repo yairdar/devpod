@@ -12,11 +12,11 @@ tasks:
       - task -a
     silent: true
     
-  release:
-    desc: build release-art
+  ci-flow:
+    desc: run ci sequence (build, test)
     cmds:
-    - mkdir -p release/
-    - cp -r devpod release/devpod
+    - task build -o prefixed
+    - task test -o prefixed
 
   build:
     desc: build release-art
@@ -24,6 +24,11 @@ tasks:
     - task post-build-stamp
     - chmod +x src/devpod/*.sh
     - chmod +x src/devpod/*.yml
+
+  test:
+    desc: run tests
+    cmds:
+    - task -d tests run-tests -o prefixed
         
   post-build-stamp:
     desc: _
@@ -48,6 +53,12 @@ tasks:
       echo 'made file executables'
       MRK_CAT
   
+  release:
+    desc: build release-art
+    cmds:
+    - mkdir -p release/
+    - cp -r devpod release/devpod
+
   init-from-gitub-latest:
     desc: API snippen of init with devpod applied on self
     cmds:

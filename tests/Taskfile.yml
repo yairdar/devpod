@@ -1,0 +1,29 @@
+# https://taskfile.dev
+
+version: '3'
+
+includes:
+  # test-after-merge: 
+  #   dir: test-after-merge
+  #   # taskfile: ./test-after-merge
+  test-before-push: 
+    dir: ./test-before-push
+    taskfile: ./test-before-push/Taskfile.yml
+
+tasks:
+  default:
+    cmds:
+      - task -l
+    silent: true
+
+  test-suite-parallel:
+    desc: run tests in parallel
+    deps:
+    - test-before-push:test-ubuntu-docker-build-simple
+    - test-before-push:test-ubuntu-docker-build-with-python
+
+  run-tests:
+    desc: _
+    cmds:
+    - task: test-suite-parallel
+
