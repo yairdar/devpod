@@ -21,7 +21,7 @@ bash devpod/install-deps.sh install-all
 ### What gets installed
 
 - CLI utilities:
-  - `curl` `wget`, `git` `vim` `zip` `unzip`
+  - `curl` `wget` `git` `vim` `zip` `unzip`
   - `task` aka [Taskfile](https://taskfile.dev/)
   - `yq`
   - `zsh`
