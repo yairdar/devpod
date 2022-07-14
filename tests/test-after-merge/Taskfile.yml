@@ -12,13 +12,13 @@ tasks:
       - task -a
     silent: true
 
-  test-qi-simple:
+  test-quick-install-simple:
     desc: Test of Quick Install in src in Ubuntu docker container using Dockerfile build, simple case
     dir: ../..
     cmds:
     - docker build -f tests/test-after-merge/Dockerfile_no_python src
   
-  test-qi-with-python:
+  test-quick-install-with-python:
     desc: Test of Quick Install in src in Ubuntu docker container using Dockerfile build with python
     dir: ../..
     cmds:

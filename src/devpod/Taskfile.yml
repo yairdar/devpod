@@ -43,7 +43,7 @@ tasks:
       - test ! -f ../Taskfile.yml
     cmds:
     - |-
-      SETUP_TOOLS_CMD_TEXTBLOCK="$(yq e '.tasks[_setup_prj_tools_]' ''../Taskfile.yml' | tee)"
+      SETUP_TOOLS_CMD_TEXTBLOCK="$(yq e '.tasks[_setup_prj_tools_]' ../Taskfile.yml | tee)"
       if [[ "$SETUP_TOOLS_CMD_TEXTBLOCK" != "" ]]; then
         echo "going to execute $SETUP_TOOLS_CMD_TEXTBLOCK"
         echo "-------------------------------------------"
