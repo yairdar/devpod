@@ -12,7 +12,7 @@ Provides Taskfile.dev based automation process
 ```shell
 echo "Inititalize $(pwd) with devpod"
 echo "This will create directory `gitpod`, run this from your repo root so `gitpod` became 1 level dir."
-curl -L https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bash
+wget -q -O - https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bash
 
 echo "run setup idepodent process, only missing tools will be installed"
 bash devpod/install-deps.sh install-all

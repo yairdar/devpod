@@ -1,4 +1,5 @@
-The Sequence contains the main steps of the devpod environment setup
+# The Sequence contains the main steps of the devpod environment setup
+
 Those steps should be run through anyway
 Current issues are marked with *italic*
 

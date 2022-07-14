@@ -4,7 +4,7 @@ DEVPOD_INIT_DIR=${DEVPOD_INIT_DIR:-devpod}
 mkdir -p $DEVPOD_INIT_DIR && cd $DEVPOD_INIT_DIR      
 
 BASE_FILE_URL=https://raw.githubusercontent.com/yairdar/devpod/main/src/devpod
-xargs -P 4 -I{} curl $BASE_FILE_URL/{} -o {} << MRK_XRGS
+xargs -P 4 -I{} wget $BASE_FILE_URL/{} -O {} << MRK_XRGS
 install-deps.sh
 setup.cloud.tools.yml
 setup.os.conda.yaml
