@@ -1,19 +1,28 @@
-# The Sequence contains the main steps of the devpod environment setup
+# The Sequence
 
-Those steps should be run through anyway
-Current issues are marked with *italic*
+> contains the main steps of the devpod environment setup.
 
-1. install-deps.sh
-2. setup.os.tools.sh
-   1. curl wget git vim zip unzip *deps: sudo*
-   2. taskfile.dev
-   3. yq
-3. task install-all
-   1. install-all-tasks
-      1. install-base-tools -> 2. setup.os.tools.sh
-      2. install mid tools
-         1. setup.zsh.tools.yml
-            1. install-zsh-base
-            2. config-zsh
-            3. install-task-completion *deps: python*
-      3. install-prj-tools *throws an error even if ok*
+Devpod works through those steps every time when it's running.
+All the steps are idempotent, so it doesn't perform any changes if the component in question is already installed.
+
+* **install-deps.sh**
+* **setup.os.tools.sh**
+  * curl wget git vim zip unzip
+  * taskfile.dev
+  * yq
+* task install-all (uses **Taskfile.yml**)
+  * install-all-tasks
+    * install-base-tools (-> setup.os.tools.sh)
+      * install mid tools
+        * **setup.zsh.tools.yml**
+          * install-zsh-base
+          * config-zsh
+          * install-task-completion
+      * install-prj-tools
+
+The Sequence uses 4 files from the [devpod](../devpod) folder (marked **bold** in the list above):
+
+* [install-deps.sh](../devpod/install-deps.sh)
+* [setup.os.tools.sh](../devpod/setup.os.tools.sh)
+* [Taskfile.yml](../devpod/Taskfile.yml)
+* [setup.zsh.tools.yml](../devpod/setup.zsh.tools.yml)
