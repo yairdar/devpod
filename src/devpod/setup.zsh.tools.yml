@@ -28,7 +28,6 @@ tasks:
     status:
     - test -e ~/.oh-my-zsh
 
-
   config-zsh:
     desc: "set bureau theme for zsh"
     cmds:
@@ -38,30 +37,46 @@ tasks:
       
   install-task-completion:
     desc: ""
+    silent: true
+    vars:
+      PYTHON_INSTALLED:
+        sh: which python3 &> /dev/null && echo "yes" || echo "no"
     cmds:
-    - |-
-      echo "Checking if python3 is installed before trying to install zsh task completion.
-      Without python3 zsh task completion will not be installed."
+
     - task: install-task-completion-check-python
-    
+    - |-
+      if [[ '{{.PYTHON_INSTALLED}}' = 'no' ]]; then
+        echo '
+          [is up to date] here means:
+          python3 is not found, cannot automaticly setup taskfile competions
+          for manual setup:
+            please open your "~/.zshrc" and add task to plugins list
+            ...
+            plugins=(git task)
+            autoload -U compinit && compinit
+            source $ZSH/oh-my-zsh.sh
+            ...
+        '
+      fi    
   install-task-completion-check-python:
     desc: "check if python is installed, and if yes, install task completion"
+    silent: true
     vars:
       PYTHON_INSTALLED:
         sh: which python3 &> /dev/null && echo "yes" || echo "no"
     status:
-      - test {{.PYTHON_INSTALLED}} = no
+      - test '{{.PYTHON_INSTALLED}}' = 'no'
     cmds:
       - |-
-        echo "python3 is installed. Installing zsh task completion"
+        echo "[ensure: zsh task completion]: python3 is present, will ensure activation of zsh task completion"
       - task: install-task-completion-now
   
   install-task-completion-now:
     desc: "install taskgo completions for taskfiles"
     status:
-      - test -e ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task
+      - test -e "${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task"
     cmds:
-      - git clone https://github.com/sawadashota/go-task-completions.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task || true
+      - git clone https://github.com/sawadashota/go-task-completions.git "${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task" || true
       - |-
         python3 - <<EOF
         from pathlib import Path
