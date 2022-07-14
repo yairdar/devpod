@@ -1,6 +1,6 @@
 # Devpod
 
-Developer Tools Setup for CLIs, Envs and Services with Taskfile.dev based automation
+Developer Tools Setup for CLIs, Envs and Services with [Taskfile](https://taskfile.dev) based automation
 
 - Develop on [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/from-referrer/)
   - or via [direct link](https://www.gitpod.io/#https://github.com/yairdar/devpod)
@@ -22,7 +22,7 @@ bash devpod/install-deps.sh install-all
 
 - CLI utilities:
   - `curl` `wget` `git` `vim` `zip` `unzip`
-  - `task` aka [Taskfile](https://taskfile.dev/)
+  - `task` aka [Taskfile](https://taskfile.dev)
   - `yq`
   - `zsh`
 
