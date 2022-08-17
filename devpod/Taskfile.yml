@@ -22,6 +22,16 @@ tasks:
     cmds:
       - task install-all--seq -o prefixed
   
+  install-all--custom:
+    desc: in parallel install all required tools for devopd
+    cmds:
+    - task setup-cloud-tools setup-os-conda setup-os-docker {{.CUSTOM}}
+
+  install-all--seq:
+    desc: in parallel install all required tools for devopd
+    cmds:
+    - task: install-all--custom
+
   install-all--parallel:
     desc: in parallel install all required tools for devopd
     deps:
@@ -29,12 +39,15 @@ tasks:
     - task: setup-os-conda
     - task: setup-os-docker
 
-  install-all--seq:
+  install-all--parallel2:
     desc: in parallel install all required tools for devopd
     cmds:
-    - task: setup-cloud-tools
-    - task: setup-os-conda
-    - task: setup-os-docker
+    - task: install-all--custom
+      vars:
+        CUSTOM: "-p"
+
+
+
 
   setup-base-tools:
     desc: Install aws cli and gh (github) cli
