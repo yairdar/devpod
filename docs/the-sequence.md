@@ -12,7 +12,7 @@ All the steps are idempotent, so it doesn't perform any changes if the component
   - yq
 - task install-all (uses **Taskfile.yml**)
   - install-all-tasks
-    - install-base-tools (-> setup.os.tools.sh)
+    - setup-base-tools (-> setup.os.tools.sh)
       - install mid tools
         - **setup.zsh.tools.yml**
           - install-zsh-base

@@ -5,7 +5,7 @@ version: "3"
 
 vars:
   GREETING: |-
-    Usage: task {install-all, install-base-tools, install-mid-tools, install-prj-tools}
+    Usage: task {install-all, setup-base-tools, install-mid-tools, install-prj-tools}
     commands:
       install-all   -   Install All Deps [Only if needed]
       ... rest      -   Install Specific subset
@@ -17,7 +17,7 @@ tasks:
       - task -a
     silent: true
 
-  install-base-tools: |-
+  setup-base-tools: |-
     echo "install base tools"
     bash setup.os.tools.sh install-all
   
@@ -50,7 +50,7 @@ tasks:
       fi
 
   install-all-tasks:
-    - task: install-base-tools
+    - task: setup-base-tools
     - task: install-mid-tools
     - task: install-prj-tools
 
