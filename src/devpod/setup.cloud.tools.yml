@@ -1,4 +1,9 @@
 version: "3"
+
+vars:
+  MAYBE_SUDO: 
+    sh: which sudo &> /dev/null && echo "sudo" || echo ""
+
 tasks:
 
   install-all:
@@ -16,7 +21,7 @@ tasks:
       - |-
         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
         unzip awscliv2.zip
-        sudo ./aws/install --update
+        {{.MAYBE_SUDO}} ./aws/install --update
 
   install-gh-cli:
     desc: _
@@ -25,7 +30,7 @@ tasks:
       - |-
         curl -L https://github.com/cli/cli/releases/download/v2.5.1/gh_2.5.1_linux_amd64.tar.gz -o gh_2.5.1_linux_amd64.tar.gz
         tar xvf gh_2.5.1_linux_amd64.tar.gz
-        sudo mv gh_2.5.1_linux_amd64/bin/gh /usr/local/bin/
+        {{.MAYBE_SUDO}} mv gh_2.5.1_linux_amd64/bin/gh /usr/local/bin/
 
   # install-aws-vault:
   # install-argocli:
