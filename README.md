@@ -17,8 +17,10 @@ wget -q -O - https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bas
 echo "run setup idempotent process, only missing tools will be installed"
 bash devpod/install-deps.sh install-all
 
+echo "install custom devpod parts"
 cd devpod
-task 
+task  -p -o prefixed setup-cloud-tools setup-os-conda setup-os-docker  
+# drop -p to disable parallelism
 ```
 
 ### What gets installed
