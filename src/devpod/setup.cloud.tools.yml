@@ -23,6 +23,7 @@ tasks:
         unzip awscliv2.zip
         {{.MAYBE_SUDO}} ./aws/install --update
 
+
   install-gh-cli:
     desc: _
     dir: __tmp__
