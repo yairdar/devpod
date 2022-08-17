@@ -76,7 +76,7 @@ tasks:
     status:
       - test -e "${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task"
     cmds:
-      - git clone https://github.com/sawadashota/go-task-completions.git "${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task" || true
+      - git clone https://github.com/yairdar/go-task-completions.git "${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task" || true
       - |-
         python3 - <<EOF
         from pathlib import Path
