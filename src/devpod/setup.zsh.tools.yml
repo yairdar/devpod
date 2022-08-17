@@ -71,6 +71,18 @@ tasks:
         echo "[ensure: zsh task completion]: python3 is present, will ensure activation of zsh task completion"
       - task: install-task-completion-now
   
+  install-task-completion-now--update:
+    desc:
+    status:
+    - git -C ~/.oh-my-zsh/custom/plugins/task remote -v | grep yairdar
+    preconditions:
+    - git -C ~/.oh-my-zsh/custom/plugins/task remote -v | grep -v yairdar    
+    cmds:
+    - |-
+      rm -rf "${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task"
+    - |-
+      git clone https://github.com/yairdar/go-task-completions.git "${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/task"
+    
   install-task-completion-now:
     desc: "install taskgo completions for taskfiles"
     status:
