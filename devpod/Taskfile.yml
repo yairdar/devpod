@@ -25,7 +25,7 @@ tasks:
   install-all--custom:
     desc: in parallel install all required tools for devopd
     cmds:
-    - task setup-cloud-tools setup-os-conda setup-os-docker {{.CUSTOM}}
+    - task -o prefixed setup-cloud-tools setup-os-conda setup-os-docker {{.CUSTOM}}
 
   install-all--seq:
     desc: in parallel install all required tools for devopd
