@@ -16,6 +16,9 @@ wget -q -O - https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bas
 
 echo "run setup idempotent process, only missing tools will be installed"
 bash devpod/install-deps.sh install-all
+
+cd devpod
+task 
 ```
 
 ### What gets installed
