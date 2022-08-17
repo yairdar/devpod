@@ -5,7 +5,7 @@ version: "3"
 
 vars:
   GREETING: |-
-    Usage: task {install-all, setup-base-tools, install-mid-tools, install-prj-tools}
+    Usage: task {install-all, setup-base-tools, setup-cloud-tools, setup-os-conda, setup-os-docker, setup-zsh-tools}
     commands:
       install-all   -   Install All Deps [Only if needed]
       ... rest      -   Install Specific subset
@@ -16,45 +16,91 @@ tasks:
       - echo "{{.GREETING}}"
       - task -a
     silent: true
-
-  setup-base-tools: |-
-    echo "install base tools"
-    bash setup.os.tools.sh install-all
   
-  install-mid-tools:
-    desc: Install Middle Level
-    silent: true
-    cmds: 
-     - |-
-      if [ "$(uname)" == "Darwin" ]; then
-        # Do something under Mac OS X platform
-      elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-        # Do something under GNU/Linux platform
-        echo "install base tools"
-        task -t setup.zsh.tools.yml install-all
-      fi
-
-  install-prj-tools:
-    desc: "install project tools"
-    status:
-      - test ! -f ../Taskfile.yml
-    cmds:
-    - |-
-      SETUP_TOOLS_CMD_TEXTBLOCK="$(yq e '.tasks[_setup_prj_tools_]' ../Taskfile.yml | tee)"
-      if [[ "$SETUP_TOOLS_CMD_TEXTBLOCK" != "" ]]; then
-        echo "going to execute $SETUP_TOOLS_CMD_TEXTBLOCK"
-        echo "-------------------------------------------"
-        task -d .. _setup_prj_tools_
-      else
-        echo "No Project Tools setup provided"
-      fi
-
-  install-all-tasks:
-    - task: setup-base-tools
-    - task: install-mid-tools
-    - task: install-prj-tools
-
   install-all:
     desc: install all required tools for devopd
     cmds:
-      - task install-all-tasks -o prefixed
+      - task install-all--seq -o prefixed
+  
+  install-all--parallel:
+    desc: in parallel install all required tools for devopd
+    deps:
+    - task: setup-cloud-tools
+    - task: setup-os-conda
+    - task: setup-os-docker
+
+  install-all--seq:
+    desc: in parallel install all required tools for devopd
+    cmds:
+    - task: setup-cloud-tools
+    - task: setup-os-conda
+    - task: setup-os-docker
+
+  setup-base-tools:
+    desc: Install aws cli and gh (github) cli
+    cmds:
+    - |- 
+      echo "install base tools"
+      bash setup.os.tools.sh install-all
+
+  setup-cloud-tools:
+    desc: Install aws cli and gh (github) cli
+    cmds:
+    - task -t setup.cloud.tools.yml install-all
+
+  setup-os-conda:
+    desc: Install conda package manager
+    cmds:
+    - task -t setup.os.conda.yaml install-all
+
+  setup-os-docker:
+    desc: Install docker.io docker system
+    cmds:
+    - task -t setup.os.docker.yaml install-all
+
+  setup-zsh-tools:
+    desc: Install zsh, oh-my-zsh and task completions
+    cmds:
+    - task -t setup.zsh.tools.yml  install-all
+
+### Old project based concept examples
+
+  # install-mid-tools:
+  #   desc: Install Middle Level
+  #   silent: true
+  #   cmds: 
+  #    - |-
+  #     if [ "$(uname)" == "Darwin" ]; then
+  #       # Do something under Mac OS X platform
+  #     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+  #       # Do something under GNU/Linux platform
+  #       echo "install base tools"
+  #       task -t setup.zsh.tools.yml install-all
+  #     fi
+
+  # install-prj-tools:
+  #   desc: "install project tools"
+  #   status:
+  #     - test ! -f ../Taskfile.yml
+  #   cmds:
+  #   - |-
+  #     SETUP_TOOLS_CMD_TEXTBLOCK="$(yq e '.tasks[_setup_prj_tools_]' ../Taskfile.yml | tee)"
+  #     if [[ "$SETUP_TOOLS_CMD_TEXTBLOCK" != "" ]]; then
+  #       echo "going to execute $SETUP_TOOLS_CMD_TEXTBLOCK"
+  #       echo "-------------------------------------------"
+  #       task -d .. _setup_prj_tools_
+  #     else
+  #       echo "No Project Tools setup provided"
+  #     fi
+
+  # install-all-tasks:
+  #   - task: setup-base-tools
+  #   - task: install-mid-tools
+  #   - task: install-prj-tools
+
+  # install-all:
+  #   desc: install all required tools for devopd
+  #   cmds:
+  #     - task install-all-tasks -o prefixed
+
+  
