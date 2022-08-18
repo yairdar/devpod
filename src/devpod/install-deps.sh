@@ -3,7 +3,7 @@
 set -e
 
 # requre 'install-all' arg
-if [[ "$1" != "install-all" ] && [ "$1" != "install-min" ]]; then
+if [[ "$1" != "install-all" ]] && [[ "$1" != "install-min" ]]; then
     echo "Usage: install-deps.sh install-all            will install all tools"
     echo "Usage: install-deps.sh install-min            will install deps, zsh and oh-my-zsh"
     exit 1
