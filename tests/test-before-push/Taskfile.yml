@@ -23,3 +23,9 @@ tasks:
     dir: ../..
     cmds:
     - docker build -f tests/test-before-push/Dockerfile_with_python src
+
+  test-ubuntu-docker-build-min:
+    desc: Test of src in Ubuntu docker container using Dockerfile build, simple case
+    dir: ../..
+    cmds:
+    - docker build -f tests/test-before-push/Dockerfile_install_min src
