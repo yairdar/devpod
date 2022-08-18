@@ -3,7 +3,7 @@
 set -e
 
 # requre 'install-all' arg
-if [[ ("$1" != "setup-base" ]]; then
+if [[ "$1" != "setup-base" ]]; then
     echo "Usage: install-deps.sh setup-base           will install deps, zsh and oh-my-zsh"
     echo "Usage: install-deps.sh setup-base [TASKNAME] will run [TASKNAME] after setup-base"
     exit 1
