@@ -14,9 +14,9 @@ echo "Inititalize $(pwd) with devpod"
 echo "This will create directory `devpod`, run this from your repo root so `devpod` became 1 level dir."
 wget -q -O - https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bash
 
-echo "install minimal toolset: deps, zsh, oh-my-zsh and task completions"
+echo "install base tools allowing futher custom installation"
 echo "run idempotent setup process, only missing tools will be installed"
-bash devpod/install-deps.sh install-min
+bash devpod/install-deps.sh setup-base
 
 echo "install custom devpod parts"
 cd devpod

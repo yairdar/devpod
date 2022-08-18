@@ -21,7 +21,7 @@ tasks:
     deps:
     - test-before-push:test-ubuntu-docker-build-simple
     - test-before-push:test-ubuntu-docker-build-with-python
-    - test-before-push:test-ubuntu-docker-build-min
+    - test-before-push:test-ubuntu-docker-setup-args
 
   run-tests:
     desc: _

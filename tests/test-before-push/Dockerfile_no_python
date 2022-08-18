@@ -6,4 +6,4 @@ ENV IN_DOCKER 1
 COPY devpod /devpod
 
 # run The Sequence to test it
-RUN bash devpod/install-deps.sh install-all
+RUN bash devpod/install-deps.sh setup-base

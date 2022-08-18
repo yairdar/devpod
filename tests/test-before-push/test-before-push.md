@@ -15,5 +15,5 @@ will not be installed, and no errors or Sequence interruptions should occur.
 Linux docker container environment, but this time with python3 installed.  
 In this case zsh task completion will be installed, and no errors or Sequence  
 interruptions should occur.
-3. `test-ubuntu-docker-build-min` will test a minimal Devpod installation in  
-a docker container without Python.
+3. `test-ubuntu-docker-setup-args` will test passing setup tasks as arguments  
+to the install-deps.sh
