@@ -23,10 +23,10 @@ bash devpod/install-deps.sh setup-base
 
 Following the Quick Install procedure you can install a minimal Developer Toolset.
 
-It contains some basic utilities (`curl` `wget` `git` `vim`  `zip` `unzip`), `task`  
-(aka [Tasker](https://taskfile.dev)),
+It contains some basic utilities (`curl` `wget` `git` `vim`  `zip` `unzip`), `task` 
+(aka [Tasker](https://taskfile.dev)),  
 [yq](https://mikefarah.gitbook.io/yq) and [zsh](https://zsh.sourceforge.io/)
-with [oh my zsh](https://ohmyz.sh) extension framework  
+with [oh my zsh](https://ohmyz.sh) extension framework 
 and task autocompletions.  
 **Tasker** is the main automation tool in Devpod. It allows to run complex  
 multistep tasks with convenient commands in task taskname form.  
@@ -70,7 +70,7 @@ echo "run idempotent setup process, only missing tools will be installed"
 bash devpod/install-deps.sh setup-base setup-cloud-tools setup-os-docker
 ```
 
-Arguments are following:
+Arguments to choose from:
 
 - Cloud Tools (GitHub CLI, AWS CLI)
   - `setup-cloud-tools`
@@ -81,7 +81,31 @@ Arguments are following:
 
 ## How to install Devpod to the Docker container
 
---
+If you include Devpod to the Dockerfile, it's pretty straightforward:
+
+```
+RUN bash devpod/install-deps.sh setup-base <SETUP_CUSTOM_PARTS>
+```
+
+where `<SETUP_CUSTOM_PARTS>` can include `setup-cloud-tools`, `setup-os-conda`  
+and `setup-os-docker`.
+
+You can see the example [here](../tests/test-before-push/Dockerfile_no_python).
+_(update this line after merge)_
+
+The only consideration could be if you need task comlpetion for zsh in your  
+Docker container or not. If you do and your container doesn't include `python3`  
+you should setup it manually:
+
+open your `~/.zshrc` file and add task to plugins list:
+
+```
+plugins=(git task)
+autoload -U compinit && compinit
+source $ZSH/oh-my-zsh.sh
+```
+
+In most cases this feature is not that useful in Docker containers.
 
 ## How to install Devpod to the cloud node
 
