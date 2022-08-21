@@ -6,35 +6,78 @@ containers or on desktop machines.
 
 ## [Quick Install](https://github.com/yairdar/devpod/blob/main/README.md#quick-install)
 
+There are two ways to Quick Install the Devpod: **Setup Base** and **Setup Base
+ and Custom Parts**
+
+## Setup Base
+
+To install the base toolset first and the rest later, do this:
+
+```
+echo "download and run the $pwd init script"
+wget -q -O - https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bash
+
+echo "run idempotent setup process, only missing tools will be installed"
+bash devpod/install-deps.sh setup-base
+```
+
 Following the Quick Install procedure you can install a minimal Developer Toolset.
 
 It contains some basic utilities (`curl` `wget` `git` `vim`  `zip` `unzip`), `task`  
-(aka [Taskfile.dev](https://taskfile.dev)),
+(aka [Tasker](https://taskfile.dev)),
 [yq](https://mikefarah.gitbook.io/yq) and [zsh](https://zsh.sourceforge.io/)
 with [oh my zsh](https://ohmyz.sh) extension framework  
 and task autocompletions.  
-Taskfile is the main automation tool in Devpod. It allows to run complex  
+**Tasker** is the main automation tool in Devpod. It allows to run complex  
 multistep tasks with convenient commands in task taskname form.  
-Taskfile uses YAML to describe the tasks, and it makes automation easy and intuitive.  
+Tasker uses YAML to describe the tasks, and it makes automation easy and intuitive.  
 That's why Devpod itself relies on Taskfile.  
-Yq is a YAML processor that supports JSON as well.  
+**Yq** is a YAML processor that supports JSON as well.  
 _(Note: it's hard for me to explain why any developer needs yq installed and why_  
 _does it come in our main Toolset)_  
-Zsh is a powerful shell that supports plugins, has an advanced autocompletion,  
+**Zsh** is a powerful shell that supports plugins, has an advanced autocompletion,  
 shorthands for most commonly used commands and vast customization capabilities.  
-Oh my zsh framework helps managing zsh configuration and and adds even more conveniece.  
+**Oh my zsh** framework helps managing zsh configuration and and adds even more conveniece.  
 Task autocompletion for zsh allow to autocomplete task names after `task` command.
 
-In addition to this basic set you can install Custom Devops Parts that you need:
+In addition to this basic set you can install Custom Devops Parts that you need  
+with following commands:
 
 - Cloud Tools (GitHub CLI, AWS CLI)
-  - task setup-cloud-tools
+  - `task setup-cloud-tools`
 - Conda
-  - task setup-os-conda
+  - `task setup-os-conda`
 - Docker
-  - setup-os-docker
+  - `task setup-os-docker`
 
---
+```
+echo "install custom devpod parts"
+cd devpod
+task  -p -o prefixed setup-cloud-tools setup-os-conda setup-os-docker  
+# drop -p to disable parallelism
+```
+
+## Setup Base and Custom Parts
+
+If you want to install any of Custom Parts right from the start, you can add  
+arguments to the Quick Install Command like this:
+
+```
+echo "download and run the $pwd init script"
+wget -q -O - https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bash
+
+echo "run idempotent setup process, only missing tools will be installed"
+bash devpod/install-deps.sh setup-base setup-cloud-tools setup-os-docker
+```
+
+Arguments are following:
+
+- Cloud Tools (GitHub CLI, AWS CLI)
+  - `setup-cloud-tools`
+- Conda
+  - `setup-os-conda`
+- Docker
+  - `setup-os-docker`
 
 ## How to install Devpod to the Docker container
 
