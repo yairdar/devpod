@@ -4,6 +4,8 @@ Devpod makes it easy to prepare an environment for software development.
 It works the same way on cloud computing instances like AWS EC2, in Docker  
 containers or on desktop machines.
 
+> Note that Devpod requires internet access in order to work.
+
 ## [Quick Install](https://github.com/yairdar/devpod/blob/main/README.md#quick-install)
 
 There are two ways to Quick Install the Devpod: **Setup Base** and **Setup Base
@@ -81,7 +83,7 @@ Arguments to choose from:
 
 ## How to install Devpod to the Docker container
 
-If you include Devpod to the Dockerfile, it's pretty straightforward:
+Including Devpod to the Dockerfile is pretty straightforward:
 
 ```
 RUN bash devpod/install-deps.sh setup-base <SETUP_CUSTOM_PARTS>
@@ -109,10 +111,90 @@ In most cases this feature is not that useful in Docker containers.
 
 ## How to install Devpod to the cloud node
 
---
+The procedure is pretty much the same for the cloud node that's for a local  
+machine or a remote server. Connect to the node over SSH and use any of two  
+Quick Install procedures.
 
 ## How to tune Devpod for your project
 
---
+You can add a custom taskfile to the devpod. It allows to minimize manual work  
+while preparing your systems for development.
+
+> The `install-nodejs` task example in this chapeter is realistic and not simplified.  
+> If you want to learn how to use taskfiles,
+> [here's a comprehensive tutorial](https://github.com/djfedos/flask-based-todo-app/blob/main/tasker_tutorail/c01_getting_started/README.md).
+
+Here's how to add a custom installation automation to Devpod:
+
+- Create a taskfile in `devpod` directory with your favorite text editor, e.g.:
+
+```
+vim setup.custom.tools.yaml
+```
+
+- Copy to this file:
+
+```yaml
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  MAYBE_SUDO: 
+    sh: which sudo &> /dev/null && echo "sudo" || echo ""
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+      - task -a
+    silent: true
+
+```
+> Note MAYBE_SUDO monade. It allows to run the same script on systems with and  
+> without sudo.
+
+- Create your custom tools installation task, for example: 
+
+```yaml
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+      - task -a
+    silent: true
+
+  install-nodejs:
+    desc: install node.js
+    vars:
+      DISTRO: linux-x64
+      VERSION: v16.17.0
+    cmds:
+      - curl https://nodejs.org/dist/{{.VERSION}}/node-{{.VERSION}}-{{.DISTRO}}.tar.xz -o node.tar.xz
+      - {{.MAYBE_SUDO}} mkdir -p /usr/local/lib/nodejs
+      - {{.MAYBE_SUDO}} tar -xJvf node.tar.xz -C /usr/local/lib/nodejs
+      - echo "export PATH=/usr/local/lib/nodejs/node-{{.VERSION}}-{{.DISTRO}}/bin:\$PATH" > ~/.profile
+      - ~/.profile
+```
+
+- Add a task to the Taskfile.yml that will call your new taskfile:
+
+```yaml
+  setup-custom-tools:
+    desc: Install node.js
+    cmds:
+    - task -t setup.custom.tools.yaml install-nodejs
+```
+
+Now you run Devpod installation like this to install nodejs with it:
+
+```
+bash devpod/install-deps.sh setup-base install-nodejs
+```
 
 ## How to contribute
+
+You are welcome to offer contributions to Devpod via pull requests to the  
+[GitHub repo](https://github.com/yairdar/devpod).  
+If you have written a custom taskfile with automation for installation of  
+a common development tool, it's definitely worth sharing with community.  
