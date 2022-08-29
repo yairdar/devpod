@@ -3,8 +3,9 @@
 set -e
 
 # requre 'install-all' arg
-if [[ "$1" != "install-all" ]]; then
-    echo "Usage install-deps.sh install-all"
+if [[ "$1" != "setup-base" ]]; then
+    echo "Usage: install-deps.sh setup-base           will install deps, zsh and oh-my-zsh"
+    echo "Usage: install-deps.sh setup-base [TASKNAME] will run [TASKNAME] after setup-base"
     exit 1
 fi
 
@@ -16,7 +17,12 @@ pushd $_ME_PARENT
     # install base tools
     bash setup.os.tools.sh install-all
 
-    # install rest using task base tools
-    task install-all -o prefixed
+    task setup-zsh-tools -o prefixed
+
+    if [[ "$2" != "" ]]; then
+    shift
+    task $@
+    fi
+    
 popd
 echo "@...@act=over flow=install-all@devpod"

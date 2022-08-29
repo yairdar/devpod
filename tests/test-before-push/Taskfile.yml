@@ -23,3 +23,9 @@ tasks:
     dir: ../..
     cmds:
     - docker build -f tests/test-before-push/Dockerfile_with_python src
+
+  test-ubuntu-docker-setup-args:
+    desc: Test of src in Ubuntu docker container setup all with base-setup args
+    dir: ../..
+    cmds:
+    - docker build -f tests/test-before-push/Dockerfile_setup_args src

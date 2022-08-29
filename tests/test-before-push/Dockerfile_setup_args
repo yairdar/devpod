@@ -9,4 +9,4 @@ COPY devpod /devpod
 RUN apt update && apt install -y python3
 
 # run The Sequence to test it
-RUN bash devpod/install-deps.sh setup-base
+RUN bash devpod/install-deps.sh setup-base setup-cloud-tools setup-os-conda setup-os-docker

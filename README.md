@@ -7,21 +7,36 @@ Developer Tools Setup for CLIs, Envs and Services with [Taskfile](https://taskfi
 
 ## Quick Install
 
-Quick Install runs [The Seqeunce](docs/the-sequence.md) that installs the main Developer Toolset
+Quick Install installs the minimal toolset and then you can install custom parts
 
 ```shell
 echo "Inititalize $(pwd) with devpod"
 echo "This will create directory `devpod`, run this from your repo root so `devpod` became 1 level dir."
 wget -q -O - https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bash
 
-echo "run setup idempotent process, only missing tools will be installed"
-bash devpod/install-deps.sh install-all
+echo "install base tools allowing futher custom installation"
+echo "run idempotent setup process, only missing tools will be installed"
+bash devpod/install-deps.sh setup-base
 
 echo "install custom devpod parts"
 cd devpod
 task  -p -o prefixed setup-cloud-tools setup-os-conda setup-os-docker  
 # drop -p to disable parallelism
 ```
+
+## Quick Install All
+
+Quick Install installs minimal toolset **and** all the custom devpod parts
+
+```shell
+echo "Inititalize $(pwd) with devpod"
+echo "This will create directory `devpod`, run this from your repo root so `devpod` became 1 level dir."
+wget -q -O - https://raw.githubusercontent.com/yairdar/devpod/main/init.sh | bash
+
+echo "install minimal set and all the custom devpod parts"
+bash devpod/install-deps.sh install-all
+```
+
 
 ### What gets installed
 
