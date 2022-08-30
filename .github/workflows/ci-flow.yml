@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
           
       - name: use devpod dir to setup working devpod
-        run: bash devpod/install-deps.sh install-all
+        run: bash devpod/install-deps.sh setup-base setup-os-docker
 
       - name: 'build'
         run: 'task build'
