@@ -19,7 +19,7 @@ echo "run idempotent setup process, only missing tools will be installed"
 bash devpod/install-deps.sh setup-base
 ```
 
-> When base toolset is installed, you can other tools:
+> When base toolset is installed, you can setup other tools:
 
 ```
 echo "install custom devpod parts"
