@@ -5,6 +5,8 @@ Developer Tools Setup for CLIs, Envs and Services with [Taskfile](https://taskfi
 - Develop on [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/from-referrer/)
   - or via [direct link](https://www.gitpod.io/#https://github.com/yairdar/devpod)
 
+## [Tutorial](https://yairdar.github.io/base-tutorials/b-devpod/devpod-get-env-ready.html)
+
 ## Quick Base Setup
 
 Quick Install installs the minimal toolset and then you can install custom parts
@@ -41,7 +43,6 @@ echo "install minimal set and all the custom devpod parts"
 bash devpod/install-deps.sh base-setup setup-cloud-tools setup-os-conda setup-os-docker
 ```
 
-
 ### Base Toolset
 
 - CLI utilities:
@@ -49,6 +50,8 @@ bash devpod/install-deps.sh base-setup setup-cloud-tools setup-os-conda setup-os
   - `task` aka [Taskfile](https://taskfile.dev)
   - `yq`
   - `zsh`
+
+###
 
 ## Development
 
